@@ -1,5 +1,6 @@
 
 	$(".ui-state-error").hide();
+	
 	// Login page 
 	$("#btnLogin").button().click(function(){
 		if ($("#username").val() != "script" && $("#password").val() != "junkie") {
@@ -11,103 +12,122 @@
 		return false;
 	});
 	
-	//ToDo list page
-	function BindToDoList(){
-		$(".accordion")
-					.accordion({
-						active: false,
-						autoHeight: false,
-						collapsible : true,
-						header: "> div > h3"
-					})
-					.sortable({
-						axis: "y",
-						handle: "h3",
-						stop: function() {
-							stop = true;
-						},
-						cancel : ".ui-state-disabled"
-					})
-					.find("input[type=checkbox]").live("click", function(){
-						var $container = $(this).parent().parent();
-						if ($container.hasClass("ui-state-disabled")) {
-							$container.removeClass("ui-state-disabled");
-						} else {
-							$container.addClass("ui-state-disabled");
-							$container.find("h3").trigger("click");
-							$container.remove();
-						}
-					});
-					
-					
-					$("button").button();
-	}
+  $.fn.setupToDoList = function () {
+    return this
+      .find(".accordion")
+  			.accordion({
+  				active: false,
+  				autoHeight: false,
+  				collapsible : true,
+  				header: "> div > h3"
+  			})
+  			.sortable({
+					axis: "y",
+					handle: "h3",
+					stop: function() {
+						stop = true;
+					},
+					cancel : ".ui-state-disabled"
+				})
+				.end()
+			.find("button")
+			  .button();
+  };
+  
+  $.fn.refreshAccordion = function () {
+    return this
+    		.accordion({
+    			active: false,
+    			autoHeight: false,
+    			collapsible : true,
+    			header: "> div > h3"
+    		})
+    		.sortable('refresh');
+  };
 	
 	//Add a project 
-	$("#AddProject").bind("click", function(){
-		$("#AddProjectItem").dialog({
-			modal: true,
-			buttons : {
-				"Add new project" : function() {
-					var foo = new Date();
-					$("#tabs").tabs("add", "#project-" + foo.getTime(), $("#project").val());
-					$(this).dialog("close");
-					BindToDoList();
-					$("#project").val("");
-				},
-				"Cancel" : function() {
-					$(this).dialog("close");
-					$("#project").val("");
-				}
+	var addProjectItem = $("#AddProjectItem").dialog({
+		modal: true,
+		autoOpen: false,
+		buttons : {
+			"Add new project" : function() {
+				var foo = new Date();
+				$("#tabs").tabs("add", "#project-" + foo.getTime(), $("#project").val());
+				$(this).dialog("close");
+				$("#project").val("");
+			},
+			"Cancel" : function() {
+				$(this).dialog("close");
+				$("#project").val("");
 			}
-		});
+		}
+	});
+	
+	$("#AddProject").bind("click", function(){
+    addProjectItem.dialog('open');
 	});
 	
 	//Add a to do item
-	$(".AddToDo").live("click", function(){
-		$("#AddToDoItem").dialog({
-			modal: true,
-			buttons : {
-				"Add to do item": function() {
-					var newItem = [{ 
-							task: $("#task").val(),
-							description: $("#description").val(),
-							duedate: $("#duedate").val()
-						}];
-					var $accordion = $($("#tabs ul li a:eq(" + $('.ui-tabs-selected').index() + ")").attr("href")).find(".accordion");
-					$("#ToDoItemTemplate").tmpl(newItem).appendTo($accordion);
-					$accordion.accordion("destroy");
-					BindToDoList();
-					$(this).dialog("close");
-					$("#task, #description, #duedate").val("");
-				},
-				"Cancel": function(){
-					$(this).dialog("close");
-					$("#task, #description, #duedate").val("");
-				}
+	var addToDo = $("#AddToDoItem").dialog({
+		modal: true,
+		autoOpen: false,
+		buttons : {
+			"Add to do item": function() {
+				var newItem = [{ 
+						task: $("#task").val(),
+						description: $("#description").val(),
+						duedate: $("#duedate").val()
+					}],
+				  $accordion = $("#tabs .ui-tabs-panel:visible .accordion");
+				
+				$("#ToDoItemTemplate")
+				  .tmpl(newItem)
+				  .appendTo($accordion);
+				  
+				$accordion.refreshAccordion();
+				
+				$(this).dialog("close");
+				$("#task, #description, #duedate").val("");
+			},
+			"Cancel": function(){
+				$(this).dialog("close");
+				$("#task, #description, #duedate").val("");
 			}
-		});
+		}
 	});
+	
+	$(".AddToDo").live("click", function(){
+		addToDo.dialog('open');
+	});
+	
 	$("#duedate").datepicker();
 	
+	$("input[type=checkbox]").live("click", function(){
+		$(this)
+		  .closest(':data(sortable-item)')
+		    .find('h3').click()
+		    .end()
+		  .slideUp(function () {
+		    var acc = $(this).parent();
+		    $(this).remove();
+		  });
+	});
+	
 	//project tabs
-	$("#tabs").tabs({
+	var $tabs = $("#tabs").tabs({
 		tabTemplate: "<li><a href='#{href}'>#{label}</a> <span class='ui-icon ui-icon-close'>Remove Tab</span></li>",
 		add: function( event, ui ) {
-						//var foo = new Date();
-						//var time = foo.getTime();
-						//var project = [{
-						//	tabid = "project" + time;
-						//}];
-						$(ui.panel).append($("#newProjectTabTemplate").tmpl());
+						$("#newProjectTabTemplate")
+						  .tmpl()
+						  .appendTo(ui.panel)
+						  .setupToDoList();
 					}
 	});
 	
 	//remove tab on click
 	$( "#tabs span.ui-icon-close" ).live( "click", function() {
-				var index = $( "li", $("#tabs") ).index( $( this ).parent() );
-				$("#tabs").tabs( "remove", index );
-			});
+		$tabs.tabs('remove', $(this).closest('li').index());
+	});
 	
 	
 	//accordion to do list
@@ -120,4 +140,4 @@
 		}
 	});
 	
-	BindToDoList();
+  $(".ui-tabs-panel").setupToDoList();
