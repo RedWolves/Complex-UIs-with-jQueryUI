@@ -36,6 +36,7 @@
   
   $.fn.refreshAccordion = function () {
     return this
+        .accordion('destroy')
     		.accordion({
     			active: false,
     			autoHeight: false,
@@ -66,7 +67,7 @@
 	
 	$("#AddProject").bind("click", function(){
     addProjectItem.dialog('open');
-	});
+	}).button();
 	
 	//Add a to do item
 	var addToDo = $("#AddToDoItem").dialog({
