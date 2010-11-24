@@ -69,6 +69,11 @@ input[type=text], input[type=password], textarea {
 #todo #AddProjectItem, #todo #AddToDoItem {
 	display: none;
 }
+
+#todo #AddProjectItem p, #todo #AddToDoItem p {
+  margin-top: 5px;
+  margin-bottom: 10px;
+}
 #todo #AddToDoItem div {
 	padding: 8px 0px;
 }

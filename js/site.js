@@ -53,8 +53,8 @@
 		buttons : {
 			"Add new project" : function() {
 				var foo = new Date();
-				$("#tabs").tabs("add", "#project-" + foo.getTime(), $("#project").val())
-				          .tabs("select", $("#tabs ul li a").length - 1);
+				$tabs.tabs("add", "#project-" + foo.getTime(), $("#project").val())
+				     .tabs("select", $tabs.tabs("length") - 1);
 				$(this).dialog("close");
 				$("#project").val("");
 			},
@@ -80,7 +80,7 @@
 						description: $("#description").val(),
 						duedate: $("#duedate").val()
 					}],
-				  $accordion = $("#tabs .ui-tabs-panel:visible .accordion");
+				  $accordion = $tabs.find(".ui-tabs-panel:visible .accordion");
 				
 				$("#ToDoItemTemplate")
 				  .tmpl(newItem)
