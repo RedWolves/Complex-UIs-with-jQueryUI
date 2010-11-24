@@ -1,4 +1,4 @@
-# Intructions
+# Instructions
 
 * Download or fork.
 * Point MAMP to folder
