@@ -60,6 +60,12 @@ input[type=text], input[type=password], textarea {
 #todo section {
 	text-align: left;
 }
+#todo #AddProject {
+	margin: 10px 0px;
+}
+#todo .AddToDo {
+	margin-top: 10px;
+}
 #todo #AddProjectItem, #todo #AddToDoItem {
 	display: none;
 }
