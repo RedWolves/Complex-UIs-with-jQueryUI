@@ -52,7 +52,8 @@
 		buttons : {
 			"Add new project" : function() {
 				var foo = new Date();
-				$("#tabs").tabs("add", "#project-" + foo.getTime(), $("#project").val());
+				$("#tabs").tabs("add", "#project-" + foo.getTime(), $("#project").val())
+				          .tabs("select", $("#tabs ul li a").length - 1);
 				$(this).dialog("close");
 				$("#project").val("");
 			},
