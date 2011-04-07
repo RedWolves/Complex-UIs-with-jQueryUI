@@ -2,44 +2,77 @@
 <html lang="en" class="no-js">
 <head>
   <meta charset="UTF-8" />
-  
-  <title>ToDo List</title>
-  
-  <meta name="description" content="" />
-  <meta name="keywords" value="" />
-  <link rel="stylesheet" href="css/ui-lightness/ui-lightness.css" type="text/css" />
-  <link rel="stylesheet" href="css/layout.css" type="text/css" />
+  <title>To-do List</title>
 
+	<!-- Declare our jQuery UI Theme CSS, this came from the download builder -->
+  <link rel="stylesheet" href="css/ui-lightness/ui-lightness.css" type="text/css" />
+  <!-- Our styles -->
+  <link rel="stylesheet" href="css/layout.css" type="text/css" />
 </head>
 <body id="login">
+	
   <div id="content">
+	
+		<!-- 
+				 Our login form container, we define this as the widget container
+		 		 with ui-widget, and make the containers corners rounded 
+				 with the ui-corner-all class. 
+		-->
 		<section class="ui-widget ui-corner-all">
-			<header class="ui-widget-header ui-corner-top">To Do Login</header>
+			
+			<!-- 
+					 A header for the widget container, defined by ui-widget-header
+					 and we are expecting only the top corners to be rounded 
+					 with the ui-corner-top class. 
+			-->
+			<header class="ui-widget-header ui-corner-top">To-do Login</header>
+			
+			<!-- 
+			     Define the start of the widget's content with ui-widget-content
+					 Make the bottom of the content container corner rounded 
+					 with the ui-corner-bottom class. 
+			-->
 			<div class="ui-widget-content ui-corner-bottom">
-				<p>Please use the login form below to login to your To Do list.</p>
-			<form>
+				<p>Please use the login form below to login to your to-do list.</p>
+				
+				<!-- 
+							The CSS Framework provides a ui-state-error class to help style
+							error messages.  We'll use this class to style an error message 
+							on an incorrect login attempt
+				-->
 				<p class="ui-state-error">Login username/password incorrect.</p>
-				<div>
-					<label for="username">Username:</label> 
-					<input type="text" id="username">
-				</div>
-				<div>
-					<label for="password">Password:</label> 
-					<input type="password" id="password">
-				</div>
-				<div>
-					<input type="submit" id="btnLogin" value="Login">
-  			</div>
-			</form>
+				
+				<!-- Our login form -->
+				<form>
+					<div>
+						<label for="username">Username:</label> 
+						<input type="text" id="username">
+					</div>
+					<div>
+						<label for="password">Password:</label> 
+						<input type="password" id="password">
+					</div>
+					<div>
+						<input type="submit" id="btnLogin" value="Login">
+  				</div>
+				</form>
+				
 			</div>
+			
 		</section>
+		
 	</div>
+		
+	<!-- 
+			 An element that's used to create a overlay effect for the login widget.
+			 The framework class ui-widget-overlay defines the style. 
+	-->
   <div class="ui-widget-overlay" style="z-index: 1002;"></div>
-	<!--<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
-	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.5/jquery-ui.min.js"></script>-->
-  <script src="js/lib/jquery-1.4.3.min.js"></script>
-  <script src="js/lib/jquery-ui-1.8.6.min.js"></script>
-  <script src="js/site.js"></script>
+
+  <!-- include jQuery, jQuery UI, and our script file -->
+  <script src="js/lib/jquery-1.5.1.min.js"></script>
+  <script src="js/lib/jquery-ui-1.8.11.min.js"></script>
+  <script src="js/login.js"></script>
 </body>
 </html>
   
