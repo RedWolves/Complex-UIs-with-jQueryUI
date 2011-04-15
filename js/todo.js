@@ -261,7 +261,9 @@
 	
 	// Define a live click event that will complete a task and remove it from the list.
 	// We use live instead of just binding the click even because the todo event was
-	// added dynamically.
+	// added dynamically and live will catch the event on newly created elements that are
+	//created after page load.
+	
 	$("input[type=checkbox]").live("click", function(){
 		
 		$(this)
