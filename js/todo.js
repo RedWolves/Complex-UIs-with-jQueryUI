@@ -234,7 +234,7 @@
 				$("#task, #description, #duedate").val("");
 			},
 			
-			// Button for cancelling adding a new to do item
+			// Button for cancelling adding a new to-do item
 			"Cancel": function(){
 				
 				// close the dialog
@@ -251,7 +251,7 @@
 	// dynamically adding new Add To Do buttons with each new tab.
 	$(".AddToDo").live("click", function(){
 		
-		// call our variable that defines our Add To Dialog and 
+		// call our variable that defines our Add To-Do Dialog and 
 		addToDo.dialog('open');
 	});
 	
